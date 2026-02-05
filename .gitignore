@@ -1,0 +1,14 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+venv/
+.env
+
+# Database
+*.db
+chroma_db/
+
+# OS
+.DS_Store
+Thumbs.db
