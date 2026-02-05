@@ -1,22 +1,22 @@
 import streamlit as st
 from ina_agent import INAAgent
-from models_api import llm  # Pastikan file models_local.py sudah ada, atau ganti ke models_api [cite: 253]
+from models_api import llm  
 
-# 1. Konfigurasi Halaman [cite: 255]
+# 1. Konfigurasi Halaman
 st.set_page_config(
     page_title="INA - Konsultan UMKM AI",
     page_icon="🤖",
     layout="wide"
 )
 
-# 2. Inisialisasi Agent dengan Cache agar tidak reload terus menerus [cite: 261, 262]
+# 2. Inisialisasi Agent dengan Cache agar tidak reload terus menerus 
 @st.cache_resource
 def load_agent():
     return INAAgent(llm)
 
 agent = load_agent() 
 
-# 3. UI Header [cite: 265, 266]
+# 3. UI Header 
 st.title("🤖 INA - Konsultan UMKM Indonesia")
 st.markdown("""
 Halo! Saya **INA**, Asisten Kecerdasan Buatan untuk membantu UMKM Indonesia. 
