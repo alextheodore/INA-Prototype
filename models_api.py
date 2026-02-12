@@ -7,7 +7,7 @@ load_dotenv()
 llm = ChatOpenAI(
  base_url="https://openrouter.ai/api/v1",
  api_key=os.getenv("OPENROUTER_API_KEY"), 
- model="qwen/qwen3-coder:free",
+ model="google/gemma-2-9b-it:free",
  model_kwargs={
         "extra_headers": {
             "HTTP-Referer": "http://localhost:8501", 
