@@ -42,13 +42,27 @@ class INAAgent:
     def setup_agent(self):
         # 2. JANGAN pakai hub.pull atau AgentExecutor manual.
         # initialize_agent versi 0.0.350 sudah merangkap semuanya.
+        # Tambahkan instruksi pakar (System Message) agar jawaban lengkap
+        prefix = """Anda adalah INA, Asisten Pakar Bisnis UMKM Indonesia. 
+        Tugas Anda adalah memberikan jawaban yang mendalam, terstruktur, dan solutif.
+        
+        Saat menjawab pertanyaan bisnis:
+        1. Berikan kategori yang jelas (Tradisional, Modern, Online, dll).
+        2. Berikan contoh brand nyata yang ada di Indonesia.
+        3. Tambahkan tips strategis (Analisis SWOT, Harga, atau Pemasaran).
+        4. Gunakan bahasa yang ramah namun profesional.
+        
+        Selalu sertakan data pendukung jika memungkinkan."""
         self.agent_executor = initialize_agent(
             tools=self.tools,
             llm=self.llm,
             agent=AgentType.CHAT_CONVERSATIONAL_REACT_DESCRIPTION,
             verbose=True,
             memory=self.memory,
-            handle_parsing_errors=True
+            handle_parsing_errors=True,
+            agent_kwargs={
+                "system_message": prefix # Menanamkan instruksi pakar
+            }
         )
 
     def chat(self, input_text: str) -> str:

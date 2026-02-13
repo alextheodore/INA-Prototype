@@ -17,7 +17,7 @@
 # )
 
 import streamlit as st
-from langchain.chat_models import ChatOpenAI # Gunakan library yang lebih baru jika sudah update
+from langchain.chat_models import ChatOpenAI 
 import os
 from dotenv import load_dotenv
 
@@ -30,5 +30,7 @@ api_key = st.secrets.get("GROQ_API_KEY") or os.getenv("GROQ_API_KEY")
 llm = ChatOpenAI(
     openai_api_base="https://api.groq.com/openai/v1",
     openai_api_key=api_key,
-    model_name="qwen/qwen3-32b"
+    model_name="qwen/qwen3-32b",
+    temperature=0.6,
+    max_tokens=4096
 )
