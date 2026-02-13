@@ -30,5 +30,5 @@ api_key = st.secrets.get("GROQ_API_KEY") or os.getenv("GROQ_API_KEY")
 llm = ChatOpenAI(
     openai_api_base="https://api.groq.com/openai/v1",
     openai_api_key=api_key,
-    model_name="llama-3.3-70b-versatile"
+    model_name="qwen/qwen3-32b"
 )
