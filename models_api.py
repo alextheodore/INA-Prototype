@@ -35,15 +35,28 @@
 #     max_tokens=4096
 # )
 
-# Versi Lokal
+import streamlit as st
+import os
 from langchain_community.llms import Ollama
 from langchain_community.embeddings import HuggingFaceEmbeddings
+from langchain.chat_models import ChatOpenAI # Pastikan ini ada di requirements.txt
 
-# 1. Inisialisasi Model Lokal (Pastikan Ollama sudah running di laptop)
-llm = Ollama(model="deepseek-r1:8b") 
+# Deteksi apakah sedang berjalan di Cloud atau Local
+is_cloud = os.getenv("STREAMLIT_RUNTIME_ENV") == "cloud" or st.secrets.get("GROQ_API_KEY")
 
-# 2. Inisialisasi Embeddings Multilingual
-# Sangat bagus untuk memproses dokumen UMKM berbahasa Indonesia
+if is_cloud:
+    # --- JIKA DI CLOUD (Pake Groq agar Pak Henri bisa akses) ---
+    api_key = st.secrets.get("GROQ_API_KEY")
+    llm = ChatOpenAI(
+        openai_api_base="https://api.groq.com/openai/v1",
+        openai_api_key=api_key,
+        model_name="qwen-2.5-32b-instruct"
+    )
+else:
+    # --- JIKA DI LOCALHOST (Pake Ollama agar hemat token) ---
+    llm = Ollama(model="llama2:7b")
+
+# Embeddings tetap bisa pake HuggingFace (tapi butuh sentence-transformers di requirements.txt)
 embeddings = HuggingFaceEmbeddings(
     model_name="sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2"
 )
